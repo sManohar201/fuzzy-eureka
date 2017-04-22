@@ -3,9 +3,9 @@
 	<arg name="max_new_marker_error" default="0.08" />
 	<arg name="max_track_error" default="0.2" />
 
-	<arg name="cam_image_topic" default="/image_raw" /> #needs check for default
-	<arg name="cam_info_topic" default="/camera/camera_info" />
-	<arg name="output_frame" default="/_frame" /> #needs a check for default value
+	<arg name="cam_image_topic" default="/usb_cam/image_raw" /> #needs check for default
+	<arg name="cam_info_topic" default="/usb_cam/camera/camera_info" />
+	<arg name="output_frame" default="/usb_cam" /> #needs a check for default value
 
 	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
 		<param name="marker_size"           type="double" value="$(arg marker_size)" />
