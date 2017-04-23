@@ -1,0 +1,7 @@
+<?xml version=1.0?>
+
+<launch>
+	
+	<node name="lidar" pkg="sicktoolbox_wrapper" type="sicklms" args="_port:=/dev/ttyS0 _baud:=38400"/>
+	
+</launch>
