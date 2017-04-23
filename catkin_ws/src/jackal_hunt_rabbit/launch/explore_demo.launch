@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!--- Run gmapping -->
+  <include file="$(find jackal_hunt_rabbit)/launch/gmapping_demo.launch" />
+
+  <!-- Run Frontier Exploration -->
+  <include file="$(find jackal_hunt_rabbit)/launch/exploration.launch" />
+
+</launch>
