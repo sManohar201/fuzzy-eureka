@@ -10,7 +10,7 @@ plugins:
 - {name: inflation,           type: "costmap_2d::InflationLayer"}
 
 explore_boundary:
-  resize_to_boundary: false
+  resize_to_boundary: true
   frontier_travel_point: middle
   #set to false for gmapping, true if re-exploring a known area
   explore_clear_space: false
