@@ -6,7 +6,7 @@ z_voxels: 2
 obstacle_range: 2.5
 raytrace_range: 3.0
 
-# publish_voxel_map: false
+publish_voxel_map: false
 robot_base_frame: base_link
 update_frequency: 4.0
 publish_frequency: 3.0
