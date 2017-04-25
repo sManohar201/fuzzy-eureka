@@ -7,6 +7,7 @@
 		<param name="pixel_format" value="yuyv" />
 		<param name="io_method" value="mmap" /> #default value
 		<param name="camera_frame_id" value="usb_cam" /> 	#default is head_camera for usb logitech cam
+		<param name="camera_info_url" value="file:///$(find usbcam_ar_track)/camera_calibration/cal.yml" />
 	</node>
 
 	<arg name="marker_size" default="4.4" />							#value changes threshold distance
