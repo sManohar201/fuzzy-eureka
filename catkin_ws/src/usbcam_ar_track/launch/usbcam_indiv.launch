@@ -8,6 +8,7 @@
 		<param name="io_method" value="mmap" /> #default value
 		<param name="camera_frame_id" value="usb_cam" /> 	#defualt is head_camera for usb logitech cam
 		#< param name="camera_name" value="usb_cam" /> #must match name from calibration
+	</node>
 
 	<arg name="marker_size" default="4.4" />							#value changes threshold distance
 	<arg name="max_new_marker_error" default="0.08" />
@@ -26,4 +27,5 @@
 		<remap from="camera_image"  to="$(arg cam_image_topic)" />
 		<remap from="camera_info"   to="$(arg cam_info_topic)" />
 	</node>
+
 </launch>
