@@ -1,44 +1,33 @@
 #!/usr/bin/env python
+
 import rospy
-import sys
-from geometry_msgs.msg import Twist
-from sensor_msgs.msg import LaserScan
+from geometry_msgs.msg import Twist # This is the message type the robot uses for velocities
 
-def callback(msg):
-	global closest_range
-	global maxi_range
-	global min_range
-	global min_angle
-	global max_angle
-	global length
-	global update_frequency
-	global angle_incre
-	global angle_time
-	global vel_x
 
-	closest_range = min(msg.ranges)
-	"""maxi_range = msg.range_max
-	min_range = msg.range_min
-	min_angle = msg.angle_min
-	max_angle = msg.angle_max
-	length = len(msg.ranges)
-	update_frequency = msg.scan_time
-	angle_incre = msg.angle_increment
-	angle_time = msg.time_increment"""
-	vel_x = msg.linear.x
+class CommandVelocity():
+    """Driving my robot
+    """
 
-	print("Got values!")
+    def __init__(self):
+        rospy.loginfo("Starting node")
+        self.pub = rospy.Publisher("/cmd_vel", Twist, queue_size=10) # Creating a publisher with whatever name...
+        
+    # A function to send velocities until the node is killed
+    def send_velocities(self):
+        r = rospy.Rate(10) # Setting a rate (hz) at which to publish
+        while not rospy.is_shutdown(): # Runnin until killed
+            rospy.loginfo("Sending commands")
+            twist_msg = Twist() # Creating a new message to send to the robot
 
-if __name__ == "__main__":
-	closest_range = 1.0
-	vel_x = 0
-	try:
-		rospy.init_node("Testing")
-		rospy.Subscriber("/scan", LaserScan, callback)
-		rate = rospy.Rate(50)
-		twist = Twist()
-		lasermsg = LaserScan()
-		while not rospy.is_shutdown():
-			print(closest_range)
-	except rospy.ROSInterruptException:
-		pass
+            # ... put something relevant into your message
+            twist_msg.angular.z = 0.3
+
+            self.pub.publish(twist_msg) # Sending the message via our publisher
+            self.pub = rospy.Publisher("/jackal_velocity_controller/cmd_vel", Twist, queue_size=10)
+            r.sleep() # Calling sleep to ensure the rate we set above
+
+if __name__ == '__main__':
+    rospy.init_node("command_velocity")
+    cv = CommandVelocity()
+    cv.send_velocities() # Calling the function
+    rospy.spin()
