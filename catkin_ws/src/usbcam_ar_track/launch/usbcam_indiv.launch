@@ -1,13 +1,12 @@
 <launch>
 
-	<node name="usb_cam" pkg="usb_cam_node"	output="screen">
+	<node name="usb_cam" pkg="usb_cam" type="usb_cam_node"	output="screen">
 		<param name="video_device" value="/dev/video0" />		#default value
 		<param name="image_width" value="640" />		#default value
 		<param name="image_height" value="480" />		#default value
-		<param name="pixel_format" value="mjpeg" /> #can be changed to yuyv
+		<param name="pixel_format" value="yuyv" />
 		<param name="io_method" value="mmap" /> #default value
-		<param name="camera_frame_id" value="usb_cam" /> 	#defualt is head_camera for usb logitech cam
-		#< param name="camera_name" value="usb_cam" /> #must match name from calibration
+		<param name="camera_frame_id" value="usb_cam" /> 	#default is head_camera for usb logitech cam
 	</node>
 
 	<arg name="marker_size" default="4.4" />							#value changes threshold distance
