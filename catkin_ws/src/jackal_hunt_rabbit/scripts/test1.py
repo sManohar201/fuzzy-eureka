@@ -10,18 +10,21 @@ def callback(msg):
 	global min_range
 	global min_angle
 	global max_angle
-	global length
 	global update_frequency
 	global angle_incre
 	global angle_time
 	global vel_x
+	global length
+	global length1
 
 	closest_range = min(msg.ranges)
+	length = len(msg.ranges)
+	length1 = (msg.angle_max-msg.angle_min)/msg.angle_increment
 	"""maxi_range = msg.range_max
 	min_range = msg.range_min
 	min_angle = msg.angle_min
 	max_angle = msg.angle_max
-	length = len(msg.ranges)
+	
 	update_frequency = msg.scan_time
 	angle_incre = msg.angle_increment
 	angle_time = msg.time_increment"""
@@ -31,7 +34,8 @@ def callback(msg):
 
 if __name__ == "__main__":
 	closest_range = 1.0
-	vel_x = 0
+	length = 0
+	length1 = 0
 	try:
 		rospy.init_node("Testing")
 		rospy.Subscriber("/scan", LaserScan, callback)
@@ -39,6 +43,8 @@ if __name__ == "__main__":
 		twist = Twist()
 		lasermsg = LaserScan()
 		while not rospy.is_shutdown():
-			print(closest_range)
+			print("Closest Range : " + str(closest_range))
+			print("total length : " + str(length))
+			print(str(length1))
 	except rospy.ROSInterruptException:
 		pass
