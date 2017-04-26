@@ -193,15 +193,15 @@ class Explorer(State):
                 randLin_n = randLin
 
             # push Twist msgs
-            linear_msg = Vector3(x=randLin_n, y=float(0.0), z=float(0.0))
+            linear_msg = Vector3(x = randLin_n, y = float(0.0), z = float(0.0))
 
-            angular_msg = Vector3(x=float(0.0), y=float(0.0), z=randAng)
-            publish_msg = Twist(linear=linear_msg, angular=angular_msg)
+            angular_msg = Vector3(x = float(0.0), y = float(0.0), z = randAng)
+            publish_msg = Twist(linear = linear_msg, angular = angular_msg)
 
             ramp_timeL = ramp_timeF
             # publish Twist
             pub.publish(publish_msg)
-            pub = rospy.Publisher("/jackal_velocity_controller/cmd_vel", Twist, queue_size=10)
+            pub = rospy.Publisher("/jackal_velocity_controller/cmd_vel", Twist, queue_size = 10)
 
             rate.sleep()
 

@@ -11,7 +11,7 @@ class CommandVelocity():
     def __init__(self):
         rospy.loginfo("Starting node")
         self.pub = rospy.Publisher("/cmd_vel", Twist, queue_size=10) # Creating a publisher with whatever name...
-        
+
     # A function to send velocities until the node is killed
     def send_velocities(self):
         r = rospy.Rate(10) # Setting a rate (hz) at which to publish
