@@ -197,9 +197,9 @@ class Explorer(State):
                 randLin_n = randLin
 
             # push Twist msgs
-            linear_msg = Vector3(x=randLin_n, y=float(0.0), z=float(0.0))
+            linear_msg = Vector3(x=randLin_n*0.65, y=float(0.0), z=float(0.0))
 
-            angular_msg = Vector3(x=float(0.0), y=float(0.0), z=randAng)
+            angular_msg = Vector3(x=float(0.0), y=float(0.0), z=randAng*0.65)
             publish_msg = Twist(linear=linear_msg, angular=angular_msg)
 
             ramp_timeL = ramp_timeF
