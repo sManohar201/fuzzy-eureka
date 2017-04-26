@@ -39,7 +39,6 @@ linear_min = -0.3
 angular_max = 0.2
 linear_max = 0.3
 
-start_time = 0
 
 # Constants for laser averaging
 front_delta = 15
@@ -156,9 +155,7 @@ class Explorer(State):
         State.__init__(self, outcomes=['ExploredArea', 'Break'])
 
     def execute(self, userdata):
-        global start_time, ramp_timeL, rate_step
-
-        start_time = time.time()
+        global ramp_timeL, rate_step
 
         # subscribe to all
         rospy.Subscriber("/scan", LaserScan, Callback)
@@ -180,7 +177,7 @@ class Explorer(State):
         randAng_n = twist_init.angular.z
 
         #### TRY TO GET THE OUTCOME OF THE ALVAR DETECTOR
-        for i in range(350):
+        for i in range(450):
             # get a new time stamp
             ramp_timeF = time.time()
             # generate random movement mapping at random interval
@@ -191,7 +188,6 @@ class Explorer(State):
                 countLimit = random.randrange(5, 25)
                 randLin = random.uniform(linear_min, linear_max)
                 randAng = random.uniform(angular_min, angular_max)
-            # randAng_n = 0
 
             # pass linear and angular velocity values to the smooth_vel function
             # untill randLin and randLin_n matches
@@ -199,11 +195,6 @@ class Explorer(State):
                 randLin_n = smooth_vel(randLin_n, randLin, ramp_timeL, ramp_timeF, rate_step)
             else:
                 randLin_n = randLin
-
-            # if not(randAng == randAng_n):
-            #            randAng_n = smooth_vel(randAng_n, randAng, ramp_timeL, ramp_timeF, rate_step)
-            #        else:
-            #            randAng_n = randAng
 
             # push Twist msgs
             linear_msg = Vector3(x=randLin_n, y=float(0.0), z=float(0.0))
