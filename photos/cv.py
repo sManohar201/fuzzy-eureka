@@ -54,37 +54,51 @@ cv2.createTrackbar('iterations', 'original', 0, 50, update_img)
 cv2.createTrackbar('blur', 'original', 0, 50, update_img)
 cv2.createTrackbar('blur_x', 'original', 0, 50, update_img)
 
-print('80, 40, 120')
-print('255, 255, 255')
+# Done?
+lower_color_magenta = np.array([0, 105, 185])
+high_color_magenta = np.array([10, 235, 255])
 
-print('0, 30, 110')
-print('0, 0')
+# Done
+lower_color_orange = np.array([5, 125, 125])
+high_color_orange = np.array([20, 255, 255])
 
-lower_color_magenta = np.array([0, 0, 0])
-high_color_magenta = np.array([255, 255, 255])
+# Done
+lower_color_yellow = np.array([20, 85, 150])
+high_color_yellow = np.array([30, 255, 255])
 
-lower_color_orange = np.array([0, 0, 0])
-high_color_orange = np.array([255, 255, 255])
+# Done
+lower_color_green = np.array([60, 105, 30])
+high_color_green = np.array([105, 255, 210])
 
-lower_color_yellow = np.array([0, 0, 0])
-high_color_yellow = np.array([255, 255, 255])
-
-lower_color_green = np.array([0, 0, 0])
-high_color_green = np.array([255, 255, 255])
-
-lower_color_blue = np.array([0, 0, 0])
-high_color_blue = np.array([255, 255, 255])
+# Done
+lower_color_blue = np.array([85, 150, 150])
+high_color_blue = np.array([125, 255, 255])
 
 lower_color_purple = np.array([0, 0, 0])
 high_color_purple = np.array([255, 255, 255])
 
+def color_filtering(hsv):
+    magenta_mask = cv2.inRange(hsv, lower_color_magenta, high_color_magenta)
+    orange_mask = cv2.inRange(hsv, lower_color_orange, high_color_orange)
+    yellow_mask = cv2.inRange(hsv, lower_color_yellow, high_color_yellow)
+    green_mask = cv2.inRange(hsv, lower_color_green, high_color_green)
+    blue_mask = cv2.inRange(hsv, lower_color_blue, high_color_blue)
+    #purple_mask = cv2.inRange(hsv, lower_color_purple, high_color_purple)
+
+    output = magenta_mask + orange_mask + yellow_mask + green_mask + blue_mask
+    return output
+
+
 def process_image(input_image, lower_color, high_color, kernel, iterations, blur, blur_x):
     hsv = cv2.cvtColor(input_image, cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv, lower_color, high_color)
-    proc = cv2.GaussianBlur(input_image, (blur * 2 + 1, blur * 2 + 1), blur_x)
-    proc = cv2.bitwise_and(proc, proc, mask = mask)
+    #mask = cv2.inRange(hsv, lower_color, high_color)
+    mask = color_filtering(hsv)
+    mask += cv2.inRange(hsv, lower_color, high_color)
+    #proc = cv2.GaussianBlur(input_image, (blur * 2 + 1, blur * 2 + 1), blur_x)
+    proc = cv2.bitwise_and(input_image, input_image, mask = mask)
     proc = cv2.erode(proc, kernel, iterations=iterations)
     proc = cv2.dilate(proc, kernel, iterations=iterations)
+    proc = cv2.GaussianBlur(proc, (blur * 2 + 1, blur * 2 + 1), blur_x)
 
     return proc
 
@@ -93,17 +107,19 @@ while True:
     img = cv2.imread('./bot_pics/capture_{}.png'.format(count))
 
     cv2.imshow('original', img)
-    cv2.resizeWindow('original', 1600, 1200)
-    cv2.moveWindow('original', 250, 500)
+    cv2.resizeWindow('original', 1600, 2000)
+    cv2.moveWindow('original', 250, 50)
 
     update_img(None)
 
 
     key = cv2.waitKey(0)
     if key == 32 or key == 106:
-        count += 1
+        if count < 2451:
+            count += 1
     elif key == 107:
-        count -=1
+        if count > 0:
+            count -=1
     elif key == 27 or key == 113:
         break
 
