@@ -144,10 +144,6 @@ def Callback(data):
             linear_max = 0.50 * scale
 
 
-def run():
-    return 0.5
-
-
 class Explorer(State):
     """Exploration of the area."""
 
@@ -206,9 +202,9 @@ class Explorer(State):
             # publish Twist
             pub.publish(publish_msg)
             pub = rospy.Publisher("/jackal_velocity_controller/cmd_vel", Twist, queue_size=10)
-        
+
             rate.sleep()
-        
+
         map_loop += 1
 
         if map_loop == 2:
@@ -236,7 +232,7 @@ class Rotate_anti(State):
         rate = rospy.Rate(10)
         for i in range(120):
             twist_msg = Twist()
-            twist_msg.angular.z = -run()
+            twist_msg.angular.z = -0.5
             pub.publish(twist_msg)
             pub = rospy.Publisher("/jackal_velocity_controller/cmd_vel", Twist, queue_size=5)
             rate.sleep()
