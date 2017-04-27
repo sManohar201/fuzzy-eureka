@@ -1,0 +1,6 @@
+<launch>
+	<node pkg="jackal_hunt_rabbit" name="explore" type="explore.py" output="screen" />
+
+	<include file="$(find jackal_hunt_rabbit)/launch/include/gmapping.launch" />
+ 
+</launch>
