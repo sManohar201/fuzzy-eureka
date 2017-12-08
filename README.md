@@ -1,6 +1,5 @@
 # fuzzy-eureka </br>
 ## EE 5900 - Intro to robotics </br>
-### Final Project
 
 #### Hunt for bunnies for Easter Egg in a given environment.
 
